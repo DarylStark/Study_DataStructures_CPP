@@ -28,6 +28,7 @@ public:
     // Add items
     void append(uint32_t value);
     void prepend(uint32_t value);
+    void insert(uint32_t index, uint32_t value);
 
     // Move items
     void move_to_front(uint32_t index);

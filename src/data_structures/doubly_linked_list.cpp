@@ -66,14 +66,53 @@ void DoublyLinkedList::prepend(uint32_t value)
     this->_head = new_node;
 }
 
+void DoublyLinkedList::insert(uint32_t index, uint32_t value)
+{
+    if (index == 0)
+        return this->prepend(value);
+
+    if (index == this->_size)
+        return this->append(value);
+
+    // Create new element
+    std::shared_ptr<DoublyLinkedListNode> new_node = std::make_shared<DoublyLinkedListNode>(value);
+
+    // Increase count
+    this->_size++;
+
+    // Get the node on the index
+    std::shared_ptr<DoublyLinkedListNode> current_node = this->_get_node(index);
+
+    if (current_node->prev)
+        current_node->prev->next = new_node;
+
+    // Update the new node
+    new_node->prev = current_node->prev;
+    new_node->next = current_node;
+
+    // Update the nodes that is now at the index
+    current_node->prev = new_node;
+
+    return;
+}
+
 void DoublyLinkedList::move_to_front(uint32_t index)
 {
+    if (index == 0)
+        return;
+
     // Get the node
     std::shared_ptr<DoublyLinkedListNode> node = this->_get_node(index);
 
     // Update the nodes around the selected node
-    node->prev->next = node->next;
-    node->next->prev = node->prev;
+    if (node->prev)
+        node->prev->next = node->next;
+    if (node->next)
+        node->next->prev = node->prev;
+
+    // Update the tail, if needed
+    if (index == this->_size - 1)
+        this->_tail = node->prev;
 
     // Set the correct values for the selected node
     node->prev = nullptr;
@@ -89,9 +128,18 @@ void DoublyLinkedList::move_to_back(uint32_t index)
     // Get the node
     std::shared_ptr<DoublyLinkedListNode> node = this->_get_node(index);
 
+    if (node == this->_tail)
+        return;
+
     // Update the nodes around the selected node
-    node->next->prev = node->prev;
-    node->prev->next = node->next;
+    if (node->next)
+        node->next->prev = node->prev;
+    if (node->prev)
+        node->prev->next = node->next;
+
+    // Update the head, if needed
+    if (index == 0)
+        this->_head = node->next;
 
     // Set the correct values for the selected node
     node->next = nullptr;
@@ -100,6 +148,8 @@ void DoublyLinkedList::move_to_back(uint32_t index)
     // Update the tail
     this->_tail->next = node;
     this->_tail = node;
+
+    return;
 }
 
 bool DoublyLinkedList::contains(uint32_t value) const

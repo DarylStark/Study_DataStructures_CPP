@@ -18,12 +18,11 @@ int main()
     list.append(30);
     list.append(40);
     list.append(50);
+    list.append(60);
+    list.append(70);
 
-    list.prepend(4);
-    list.prepend(3);
-    list.prepend(2);
-    list.prepend(1);
-
+    print_list(list);
+    list.insert(5, 55);
     print_list(list);
 
     std::flush(std::cout);
