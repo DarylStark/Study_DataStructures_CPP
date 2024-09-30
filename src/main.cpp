@@ -25,6 +25,11 @@ int main()
     list.insert(5, 55);
     print_list(list);
 
+    while (list.size())
+        std::cout << "Popped: " << list.pop_tail() << '\n';
+
+    print_list(list);
+
     std::flush(std::cout);
 
     return 0;

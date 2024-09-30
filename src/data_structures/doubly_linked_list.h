@@ -30,6 +30,10 @@ public:
     void prepend(uint32_t value);
     void insert(uint32_t index, uint32_t value);
 
+    // Removing items
+    uint32_t pop_head();
+    uint32_t pop_tail();
+
     // Move items
     void move_to_front(uint32_t index);
     void move_to_back(uint32_t index);

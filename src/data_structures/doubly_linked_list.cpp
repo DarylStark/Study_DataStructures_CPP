@@ -96,6 +96,41 @@ void DoublyLinkedList::insert(uint32_t index, uint32_t value)
     return;
 }
 
+uint32_t DoublyLinkedList::pop_head()
+{
+    if (!this->_head)
+        throw std::invalid_argument("Empty list");
+
+    // Decrease count
+    this->_size--;
+
+    // Get the value
+    uint32_t value = this->_head->value;
+
+    // Update the header
+    this->_head->prev = nullptr;
+    this->_head = this->_head->next;
+
+    return value;
+}
+
+uint32_t DoublyLinkedList::pop_tail()
+{
+    if (!this->_tail)
+        throw std::invalid_argument("Empty list");
+
+    // Decrease count
+    this->_size--;
+
+    // Get the value
+    uint32_t value = this->_tail->value;
+
+    // Update the header
+    this->_tail = this->_tail->prev;
+
+    return value;
+}
+
 void DoublyLinkedList::move_to_front(uint32_t index)
 {
     if (index == 0)
